@@ -1,29 +1,5 @@
 #include <stdio.h>
-
-// Kernel
-
-void kernel_main() {
-    printf("Kernel Initialized\n");
-    // Initialize memory management
-    // Initialize process management
-}
-
-int main() {
-    kernel_main();
-    return 0;
-}
-
-void init_memory() {
-    // Simple memory initialization
-    printf("Memory Initialized\n");
-}
-
-void init_processes() {
-    // Simple process management initialization
-    printf("Process Management Initialized\n");
-}
-
-// File System
+#include <string.h>
 
 typedef struct {
     char name[100];
@@ -49,8 +25,6 @@ void read_file(const char *name) {
     printf("File not found\n");
 }
 
-// Process Management
-
 typedef struct {
     int pid;
     char name[100];
@@ -71,8 +45,6 @@ void list_processes() {
     }
 }
 
-// CLI
-
 void shell() {
     char command[100];
     while (1) {
@@ -88,36 +60,18 @@ void shell() {
     }
 }
 
-// Devices Drivers
-
-void init_keyboard() {
-    printf("Keyboard Initialized\n");
+void kernel_main() {
+    printf("Kernel Initialized\n");
+    // Initialize memory management
+    // Initialize process management
 }
-
-void init_display() {
-    printf("Display Initialized\n");
-}
-
-// User Program
-
-void execute_program(void (*program)()) {
-    program();
-}
-
-// Error Handling 
-
-void log_error(const char *error) {
-    printf("Error: %s\n", error);
-}
-
-// Run
 
 int main() {
     kernel_main();
-    init_memory();
-    init_processes();
-    init_keyboard();
-    init_display();
+    // init_memory();
+    // init_processes();
+    // init_keyboard();
+    // init_display();
     shell();
     return 0;
 }
