@@ -17,13 +17,27 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Set up GCC
-      run: sudo apt-get install -y gcc
+      run: sudo apt-get install -y gcc xorriso
 
     - name: Compile system.c
       run: gcc system.c -o system
 
-    - name: Upload compiled binary
+    - name: Create ISO directory structure
+      run: |
+        mkdir -p iso/boot/grub
+        cp system iso/boot/
+        echo 'set timeout=0' > iso/boot/grub/grub.cfg
+        echo 'set default=0' >> iso/boot/grub/grub.cfg
+        echo 'menuentry "My OS" {' >> iso/boot/grub/grub.cfg
+        echo '  multiboot /boot/system' >> iso/boot/grub/grub.cfg
+        echo '  boot' >> iso/boot/grub/grub.cfg
+        echo '}' >> iso/boot/grub/grub.cfg
+
+    - name: Create ISO file
+      run: xorriso -as mkisofs -R -b boot/grub/stage2_eltorito -no-emul-boot -boot-load-size 4 -boot-info-table -o my_os.iso iso
+
+    - name: Upload ISO file
       uses: actions/upload-artifact@v2
       with:
-        name: system
-        path: system
+        name: my_os
+        path: my_os.iso
