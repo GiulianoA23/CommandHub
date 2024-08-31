@@ -30,7 +30,6 @@ jobs:
       run: |
         mkdir -p iso/boot/grub
         mkdir home
-        mkdir iso
         cp -r boot/ kernel/ bin/ lib/ etc/ home/ iso/
         
         # Create a basic GRUB configuration file
