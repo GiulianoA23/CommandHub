@@ -1,0 +1,29 @@
+name: Compile System Code
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up GCC
+      run: sudo apt-get install -y gcc
+
+    - name: Compile system.c
+      run: gcc system.c -o system
+
+    - name: Upload compiled binary
+      uses: actions/upload-artifact@v2
+      with:
+        name: system
+        path: system
