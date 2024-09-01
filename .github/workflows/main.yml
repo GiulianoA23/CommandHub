@@ -12,7 +12,7 @@ jobs: # Tareas a ejecutar
     runs-on: windows-latest # Ejecuta la tarea en un runner de Windows
     
     steps: # Pasos a seguir
-    - uses: actions/checkout@v2 # Obtiene el código fuente
+    - uses: actions/checkout@v4 # Obtiene el código fuente
     
     - name: Set up Python # Configura Python
       uses: actions/setup-python@v2
@@ -30,7 +30,7 @@ jobs: # Tareas a ejecutar
         pyinstaller --onefile sys.py
     
     - name: Upload artifact # Sube el ejecutable como artefacto
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: windows-executable
         path: dist/sys.exe
