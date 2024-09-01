@@ -27,7 +27,7 @@ jobs: # Tareas a ejecutar
     
     - name: Build executable # Construye el ejecutable
       run: |
-        pyinstaller --onefile sys.py
+        pyinstaller sys.spec
     
     - name: Upload artifact # Sube el ejecutable como artefacto
       uses: actions/upload-artifact@v3
