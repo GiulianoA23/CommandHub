@@ -1,43 +1,36 @@
-name: Compile System Code
+name: Build Windows Executable
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
+
   build:
-    runs-on: ubuntu-latest
-
+    runs-on: windows-latest
+    
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up GCC
-      run: sudo apt-get install -y gcc xorriso
-
-    - name: Compile system.c
-      run: gcc system.c -o system
-
-    - name: Create ISO directory structure
+    - uses: actions/checkout@v2
+    
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    
+    - name: Install dependencies
       run: |
-        mkdir -p iso/boot/grub
-        cp system iso/boot/
-        echo 'set timeout=0' > iso/boot/grub/grub.cfg
-        echo 'set default=0' >> iso/boot/grub/grub.cfg
-        echo 'menuentry "My OS" {' >> iso/boot/grub/grub.cfg
-        echo '  multiboot /boot/system' >> iso/boot/grub/grub.cfg
-        echo '  boot' >> iso/boot/grub/grub.cfg
-        echo '}' >> iso/boot/grub/grub.cfg
-
-    - name: Create ISO file
-      run: xorriso -as mkisofs -R -b boot/grub/stage2_eltorito -no-emul-boot -boot-load-size 4 -boot-info-table -o my_os.iso iso
-
-    - name: Upload ISO file
+        python -m pip install --upgrade pip
+        pip install pyinstaller
+        pip install -r requirements.txt
+    
+    - name: Build executable
+      run: |
+        pyinstaller --onefile sistema_principal.py
+    
+    - name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
-        name: my_os
-        path: my_os.iso
+        name: windows-executable
+        path: dist/sistema_principal.exe
