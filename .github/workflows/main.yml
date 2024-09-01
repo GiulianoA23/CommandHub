@@ -28,6 +28,7 @@ jobs: # Tareas a ejecutar
     - name: Build executable # Construye el ejecutable
       run: |
         pyinstaller sys.spec
+        cd dist
         ls
     
     - name: Upload artifact # Sube el ejecutable como artefacto
