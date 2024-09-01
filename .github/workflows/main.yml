@@ -27,7 +27,7 @@ jobs:
     
     - name: Build executable
       run: |
-        pyinstaller --onefile sistema_principal.py
+        pyinstaller --onefile sys.py
     
     - name: Upload artifact
       uses: actions/upload-artifact@v2
