@@ -28,9 +28,10 @@ jobs: # Tareas a ejecutar
     - name: Build executable # Construye el ejecutable
       run: |
         pyinstaller sys.spec
+        ls
     
     - name: Upload artifact # Sube el ejecutable como artefacto
       uses: actions/upload-artifact@v3
       with:
         name: windows-executable
-        path: dist/sys.exe
+        path: sys.exe
